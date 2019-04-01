@@ -1,23 +1,27 @@
 package com.gapestation.collegeapp_brian;
 
 public class Profile {
-    String firstName;
-    String lastName;
+    String mFirstName;
+    String mLastName;
 
     public String getFirstName() {
-        return firstName;
+        return mFirstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        mFirstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return mLastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        mLastName = lastName;
     }
 
+    public Profile(String firstName, String lastName){
+        mFirstName = firstName;
+        mLastName = lastName;
+    }
 }
