@@ -1,5 +1,7 @@
 package com.gapestation.collegeapp_brian;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,11 +26,18 @@ import com.backendless.exceptions.BackendlessFault;
 public class ApplicantActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Fragment contentFragment = null;
+    private String MY_EMAIL_ADDRESS;
+    public static String EMAIL_PREF;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences =
+                this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(EMAIL_PREF, MY_EMAIL_ADDRESS);
+        editor.commit();
         final String APP_ID = getString(R.string.APP_ID);
         final String APP_KEY = getString(R.string.APP_KEY);
         Backendless.initApp(this, APP_ID, APP_KEY);

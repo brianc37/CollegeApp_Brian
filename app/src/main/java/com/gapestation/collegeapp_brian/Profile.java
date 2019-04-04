@@ -5,6 +5,7 @@ import java.util.Date;
 public class Profile {
     String mFirstName;
     String mLastName;
+    String mEmail;
     Date dateOfBirth;
 
     public String getFirstName() {
@@ -21,6 +22,14 @@ public class Profile {
 
     public void setLastName(String lastName) {
         mLastName = lastName;
+    }
+
+    public String getEmail() {
+        return mEmail;
+    }
+
+    public void setEmail(String email) {
+        mEmail = email;
     }
 
     public Profile(String firstName, String lastName){

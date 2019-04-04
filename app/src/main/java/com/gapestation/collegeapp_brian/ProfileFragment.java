@@ -1,7 +1,9 @@
 package com.gapestation.collegeapp_brian;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+
 import java.util.Date;
+
+import static com.backendless.media.SessionBuilder.TAG;
 
 public class ProfileFragment extends Fragment {
     private TextView firstnametext;
@@ -27,7 +35,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle bundle) {
         super.onCreateView(inflater, view, bundle);
 
-        mProfile = new Profile();
+        mProfile = new Profile("Brian", "Chamberlain");
         View rootView = inflater.inflate(R.layout.fragment_profile, view, false);
         firstnametext = rootView.findViewById(R.id.profilefirstname);
         lastnametext = rootView.findViewById(R.id.profilelastname);
@@ -58,6 +66,26 @@ public class ProfileFragment extends Fragment {
                 DatePickerButton.setText(mProfile.dateOfBirth.toString());
             }
         }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        SharedPreferences sharedPreferences =
+                getActivity().getPreferences(Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString(ApplicantActivity.EMAIL_PREF, null);
+        if (mProfile.getEmail() == null) {
+            mProfile.setEmail(email);
+        }
+        Backendless.Data.of(Profile.class).save(mProfile, new AsyncCallback<Profile>() {
+            @Override
+            public void handleResponse(Profile response) {
+                Log.i(TAG, "Saved profile to Backendless");
+            }
+            public void handleFault(BackendlessFault fault) {
+                Log.i(TAG, "Failed to save profile!" + fault.getMessage());
+            }
+        });
     }
 
 }
