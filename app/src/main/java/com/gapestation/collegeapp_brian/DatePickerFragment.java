@@ -18,7 +18,7 @@ import java.util.GregorianCalendar;
 public class DatePickerFragment extends DialogFragment {
 
     final static String DATE_ARGUMENT ="dateofbirth";
-    final static String EXTRA_DATE_OF_BIRTH = "com.linburgtech.collegeapp_linburg2019.DatePickerFragment";
+    final static String EXTRA_DATE_OF_BIRTH = "com.gapestation.collegeapp_brian.DatePickerFragment";
     DatePicker mDatePicker;
     Date mDate;
     Calendar mCalendar;
@@ -28,6 +28,9 @@ public class DatePickerFragment extends DialogFragment {
         View v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.fragment_date_picker, null);
         mDate = (Date)getArguments().getSerializable(DATE_ARGUMENT);
+        if (mDate == null){
+            mDate = new Date();
+        }
         mCalendar = Calendar.getInstance();
         mCalendar.setTime(mDate);
         mDatePicker = (DatePicker) v.findViewById(R.id.dialog_date_of_birth);

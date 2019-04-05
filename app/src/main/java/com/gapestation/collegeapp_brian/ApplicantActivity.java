@@ -26,7 +26,7 @@ import com.backendless.exceptions.BackendlessFault;
 public class ApplicantActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Fragment contentFragment = null;
-    private String MY_EMAIL_ADDRESS;
+    private String MY_EMAIL_ADDRESS = "brianusa2001@gmail.com";
     public static String EMAIL_PREF;
 
 

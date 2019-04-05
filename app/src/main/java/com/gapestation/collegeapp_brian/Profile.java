@@ -6,6 +6,7 @@ public class Profile {
     String mFirstName;
     String mLastName;
     String mEmail;
+    String mObjectId;
     Date dateOfBirth;
 
     public String getFirstName() {
@@ -39,5 +40,13 @@ public class Profile {
 
     public Profile(){
         dateOfBirth = new Date();
+    }
+
+    public void setObjectId(String objectId) {
+        mObjectId = objectId;
+    }
+
+    public String getObjectId() {
+        return mObjectId;
     }
 }

@@ -15,10 +15,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
+import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.persistence.DataQueryBuilder;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static com.backendless.media.SessionBuilder.TAG;
 
@@ -39,8 +44,8 @@ public class ProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile, view, false);
         firstnametext = rootView.findViewById(R.id.profilefirstname);
         lastnametext = rootView.findViewById(R.id.profilelastname);
-        lastnametext.setText(Profile1.getLastName());
-        firstnametext.setText(Profile1.getFirstName());
+        lastnametext.setText(mProfile.getLastName());
+        firstnametext.setText(mProfile.getFirstName());
         DatePickerButton = (Button)rootView.findViewById(R.id.DatePickerButton);
 
         DatePickerButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +82,34 @@ public class ProfileFragment extends Fragment {
         if (mProfile.getEmail() == null) {
             mProfile.setEmail(email);
         }
+
+        String whereClause = "email = '" + email + "'";
+        DataQueryBuilder query = DataQueryBuilder.create();
+        query.setWhereClause(whereClause);
+        Backendless.Persistence.of(Profile.class).find(query, new
+                AsyncCallback<BackendlessCollection<Profile>>() {
+                    @Override
+                    public void handleResponse(BackendlessCollection<Profile> response) {
+                        if (!response.getData().isEmpty()) {
+                            mProfile = response.getData().get(0);
+                            firstnametext.setText(response.getData().get(0).getFirstName());
+                            lastnametext.setText(response.getData().get(0).getLastName());
+                            Date birthday = response.getData().get(0).getBirthday();
+                            try {
+                                Date formattedBirthday = new SimpleDateFormat("yyyy-MM-dd").parse(birthday.toString());
+                                DatePickerButton.setText(formattedBirthday.toString());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            Log.i(TAG, "Got profile: " + response.getData().get(0).objectId);
+                        }
+                    }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Log.e(TAG, "Failed to find profile: " + fault.getMessage());
+            }
+        });
         Backendless.Data.of(Profile.class).save(mProfile, new AsyncCallback<Profile>() {
             @Override
             public void handleResponse(Profile response) {
@@ -88,4 +121,33 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        SharedPreferences sharedPreferences =
+                getActivity().getPreferences(Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString(ApplicantActivity.EMAIL_PREF, null);
+        String whereClause = "email = '" + email + "'";
+        DataQueryBuilder query = DataQueryBuilder.create();
+        query.setWhereClause(whereClause);
+        Backendless.Data.of(Profile.class).find(query, new AsyncCallback<List<Profile>>() {
+            @Override
+            public void handleResponse(List<Profile> profile) {
+                if (!profile.isEmpty()) {
+                    String profileId = profile.get(0).getObjectId();
+                    Log.d(TAG, "Object ID: " + profileId);
+                    mProfile = profile.get(0);
+                    firstnametext.setText(mProfile.getFirstName());
+                    lastnametext.setText(mProfile.getLastName());
+                    if (mProfile.dateOfBirth != null) {
+                        DatePickerButton.setText(mProfile.dateOfBirth.toString());
+                    }
+                }
+            }
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Log.e(TAG, "Failed to find profile: " + fault.getMessage());
+            }
+        });
+    }
 }
