@@ -1,7 +1,5 @@
 package com.gapestation.collegeapp_brian;
 
-import android.widget.TextView;
-
 public abstract class FamilyMember {
     String mFirstName;
     String mLastName;
@@ -25,5 +23,10 @@ public abstract class FamilyMember {
     public FamilyMember(){
         mFirstName = "Family";
         mLastName = "Member";
+    }
+
+    public FamilyMember(String firstName, String lastName){
+        mFirstName = firstName;
+        mLastName = lastName;
     }
 }

@@ -15,13 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -86,29 +83,20 @@ public class ProfileFragment extends Fragment {
         String whereClause = "email = '" + email + "'";
         DataQueryBuilder query = DataQueryBuilder.create();
         query.setWhereClause(whereClause);
-        Backendless.Persistence.of(Profile.class).find(query, new
-                AsyncCallback<BackendlessCollection<Profile>>() {
-                    @Override
-                    public void handleResponse(BackendlessCollection<Profile> response) {
-                        if (!response.getData().isEmpty()) {
-                            mProfile = response.getData().get(0);
-                            firstnametext.setText(response.getData().get(0).getFirstName());
-                            lastnametext.setText(response.getData().get(0).getLastName());
-                            Date birthday = response.getData().get(0).getBirthday();
-                            try {
-                                Date formattedBirthday = new SimpleDateFormat("yyyy-MM-dd").parse(birthday.toString());
-                                DatePickerButton.setText(formattedBirthday.toString());
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            Log.i(TAG, "Got profile: " + response.getData().get(0).objectId);
-                        }
-                    }
-
+        Backendless.Data.of(Profile.class).find(query, new AsyncCallback<List<Profile>>() {
+            @Override
+            public void handleResponse(List<Profile> profile) {
+                if (!profile.isEmpty()) {
+                    String profileId = profile.get(0).getObjectId();
+                    Log.d(TAG, "Object ID: " + profileId);
+                    mProfile.setObjectId(profileId);
+                }
+            }
             @Override
             public void handleFault(BackendlessFault fault) {
                 Log.e(TAG, "Failed to find profile: " + fault.getMessage());
             }
+
         });
         Backendless.Data.of(Profile.class).save(mProfile, new AsyncCallback<Profile>() {
             @Override

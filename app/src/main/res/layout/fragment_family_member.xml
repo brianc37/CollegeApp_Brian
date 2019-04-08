@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/familymembertitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="FamilyMemberContent" />
 
@@ -23,19 +23,19 @@
 
     <TextView
         android:id="@+id/firstname"
-        android:layout_width="63dp"
-        android:layout_height="21dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="firstname"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lastname"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="lastname"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstname" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -17,10 +17,12 @@ public class FamilyMemberFragment extends Fragment {
         super.onCreateView(inflater, view, bundle);
 
         View rootView = inflater.inflate(R.layout.fragment_family_member, view, false);
-        firstnametext = rootView.findViewById(R.id.firstname);
-        lastnametext = rootView.findViewById(R.id.lastname);
+        firstnametext = (TextView) rootView.findViewById(R.id.firstname);
+        lastnametext = (TextView) rootView.findViewById(R.id.lastname);
+
         lastnametext.setText(FamilyMember1.getLastName());
         firstnametext.setText(FamilyMember1.getFirstName());
+
         return rootView;
     }
 }
