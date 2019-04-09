@@ -1,6 +1,6 @@
 package com.gapestation.collegeapp_brian;
 
-public abstract class FamilyMember {
+public abstract class FamilyMember extends ApplicantData {
     String mFirstName;
     String mLastName;
 
