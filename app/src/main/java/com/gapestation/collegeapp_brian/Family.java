@@ -11,6 +11,7 @@ public class Family {
         family = new ArrayList<>();
         family.add(new Guardian("",""));
         family.add(new Guardian());
+        family.add(new Sibling("", ""));
     }
 
     public static Family getFamily(){
