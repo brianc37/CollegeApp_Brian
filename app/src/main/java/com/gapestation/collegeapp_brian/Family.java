@@ -28,4 +28,13 @@ public class Family {
     public void setFamily(ArrayList<FamilyMember> family) {
         this.family = family;
     }
+
+    public void addFamilyMember(FamilyMember familyMember){
+        family.add(new familyMember.getClass()(fam))
+    }
+
+    public void deleteFamilyMember(String type, String firstname, String lastname){
+        if(type == "Sibling") family.remove(new Sibling(firstname, lastname));
+        if(type == "Guardian") family.remove(new Guardian(firstname,lastname));
+    }
 }
