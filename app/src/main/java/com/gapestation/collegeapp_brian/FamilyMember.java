@@ -29,4 +29,9 @@ public abstract class FamilyMember extends ApplicantData {
         mFirstName = firstName;
         mLastName = lastName;
     }
+    
+    public boolean equals(FamilyMember familyMember){
+        if(familyMember.getFirstName() == mFirstName && familyMember.getLastName() == mLastName) return true;
+        else return false;
+    }
 }

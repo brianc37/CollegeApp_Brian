@@ -30,11 +30,10 @@ public class Family {
     }
 
     public void addFamilyMember(FamilyMember familyMember){
-        family.add(new familyMember.getClass()(fam))
+        family.add(familyMember);
     }
 
-    public void deleteFamilyMember(String type, String firstname, String lastname){
-        if(type == "Sibling") family.remove(new Sibling(firstname, lastname));
-        if(type == "Guardian") family.remove(new Guardian(firstname,lastname));
+    public void deleteFamilyMember(FamilyMember familyMember){
+        family.remove(familyMember);
     }
 }
