@@ -1,5 +1,6 @@
 package com.gapestation.collegeapp_brian;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -86,19 +87,32 @@ public class FamilyListFragment extends ListFragment {
             case R.id.menu_item_new_guardian:
                 Log.d(TAG, "Selected add new guardian.");
                 Guardian guardian = new Guardian();
+                boolean duplicate = false;
                 for (FamilyMember f: Family.getFamily().getFamilyList()) {
-                    if (f == guardian) {
-                        Log.i(TAG, "Possible match " + guardian + " and" + f);
+                    if (f.equals(guardian)) {
+                        duplicate = true;
                     }
+                    else duplicate = false;
                 }
-                Family.getFamily().addFamilyMember(guardian);
-                adapter.notifyDataSetChanged();
+                if(duplicate == true) {
+                    Family.getFamily().addFamilyMember(guardian);
+                    adapter.notifyDataSetChanged();
+                }
                 return true;
             case R.id.menu_item_new_sibling:
                 Log.d(TAG, "Selected add new sibling.");
                 Sibling sibling = new Sibling();
-                Family.getFamily().addFamilyMember(sibling);
-                adapter.notifyDataSetChanged();
+                boolean duplicateSibling = false;
+                for (FamilyMember f: Family.getFamily().getFamilyList()) {
+                    if (f.equals(sibling)) {
+                        duplicateSibling = true;
+                    }
+                    else duplicateSibling = false;
+                }
+                if(duplicateSibling == true) {
+                    Family.getFamily().addFamilyMember(sibling);
+                    adapter.notifyDataSetChanged();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -148,5 +162,15 @@ public class FamilyListFragment extends ListFragment {
         super.onResume();
         FamilyMemberAdapter adapter = (FamilyMemberAdapter) getListAdapter();
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        FamilyMember f = ((FamilyMemberAdapter)getListAdapter()).getItem(position);
+        Log.d(TAG, f.toString() + " was clicked." + FamilyMemberActivity.class);
+        Intent i = new Intent(getActivity(), FamilyMemberActivity.class);
+        i.putExtra(FamilyMember.EXTRA_RELATION, f.getClass().getName());
+        i.putExtra(FamilyMember.EXTRA_INDEX, position);
+        startActivity(i);
     }
 }

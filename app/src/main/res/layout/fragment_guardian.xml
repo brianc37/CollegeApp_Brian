@@ -7,17 +7,17 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/familymembercontent"
+        android:id="@+id/familyguardiancontent"
         android:layout_width="411dp"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
         <TextView
-            android:id="@+id/familymembertitle"
+            android:id="@+id/familyguardiantitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="FamilyMemberContent" />
+            android:text="FamilyGuardianContent" />
 
     </LinearLayout>
 
