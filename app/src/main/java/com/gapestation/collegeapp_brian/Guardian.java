@@ -35,7 +35,9 @@ public class Guardian extends FamilyMember{
         mOccupation = "unknown";
     }
 
-    public Guardian(String occupation){
+    public Guardian(String firstName, String lastName, String occupation){
+        mFirstName = firstName;
+        mLastName = lastName;
         mOccupation = occupation;
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -174,6 +176,14 @@ public class ProfileFragment extends Fragment {
                 Log.e("Profile Fragment", "Failed to find profile: " + fault.getMessage());
             }
         });
+    }
+
+    public File getPhotoFile() {
+        File externalFilesDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (externalFilesDir == null) {
+            return null;
+        }
+        return new File (externalFilesDir, mProfile.getPhotoFilename());
     }
 }
 

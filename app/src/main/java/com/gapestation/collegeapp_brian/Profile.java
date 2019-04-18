@@ -8,6 +8,7 @@ public class Profile {
     String mEmail;
     String mObjectId;
     Date dateOfBirth;
+    private final static String photoFilename = "IMG_PROFILE.jpg";
 
     public String getFirstName() {
         return mFirstName;
@@ -48,5 +49,9 @@ public class Profile {
 
     public String getObjectId() {
         return mObjectId;
+    }
+
+    public String getPhotoFilename(){
+        return photoFilename;
     }
 }

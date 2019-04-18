@@ -37,5 +37,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstname" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/occupation"
+        android:text=" "
+        app:layout_constraintTop_toBottomOf="@id/lastname"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/occupationEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/occupation"/>
+
 
 </android.support.constraint.ConstraintLayout>
