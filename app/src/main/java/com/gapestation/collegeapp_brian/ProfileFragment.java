@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
@@ -29,6 +30,9 @@ import static com.backendless.media.SessionBuilder.TAG;
 public class ProfileFragment extends Fragment {
     private TextView firstnametext;
     private TextView lastnametext;
+    private EditText firstnameEdit;
+    private EditText lastnameEdit;
+    private Button submit;
     public Profile Profile1 = new Profile("Alan", "Turing");
     public Profile mProfile;
     public static final int REQUEST_DATE_OF_BIRTH = 0;
@@ -66,6 +70,9 @@ public class ProfileFragment extends Fragment {
         lastnametext.setText(mProfile.getLastName());
         firstnametext.setText(mProfile.getFirstName());
         DatePickerButton = (Button) rootView.findViewById(R.id.DatePickerButton);
+        firstnameEdit = rootView.findViewById(R.id.profilefirstnameEdit);
+        lastnameEdit = rootView.findViewById(R.id.profilelastnameEdit);
+        submit = (Button) rootView.findViewById(R.id.submitButton);
 
         DatePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +84,17 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstnametext.setText(firstnameEdit.getText());
+                lastnametext.setText(lastnameEdit.getText());
+                saveToBackendless();
+            }
+        });
         return rootView;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -97,7 +112,6 @@ public class ProfileFragment extends Fragment {
 
     public void onPause() {
         super.onPause();
-        saveToBackendless();
     }
 
     @Override
@@ -123,6 +137,7 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             }
+
 
             @Override
             public void handleFault(BackendlessFault fault) {

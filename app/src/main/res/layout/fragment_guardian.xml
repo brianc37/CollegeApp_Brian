@@ -6,23 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/familyguardiancontent"
-        android:layout_width="411dp"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-
-        <TextView
-            android:id="@+id/familyguardiantitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FamilyGuardianContent" />
-
-    </LinearLayout>
-
     <TextView
-        android:id="@+id/firstname"
+        android:id="@+id/guardianfirstname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="firstname"
@@ -30,19 +15,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/lastname"
+        android:id="@+id/guardianlastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="lastname"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstname" />
+        app:layout_constraintTop_toBottomOf="@+id/guardianfirstname" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/occupation"
-        android:text=" "
-        app:layout_constraintTop_toBottomOf="@id/lastname"
+        android:text="occupation"
+        app:layout_constraintTop_toBottomOf="@id/guardianlastname"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
