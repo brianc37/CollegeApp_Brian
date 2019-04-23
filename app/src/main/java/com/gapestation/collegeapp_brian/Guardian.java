@@ -4,6 +4,7 @@ public class Guardian extends FamilyMember{
     String mLastName;
     String mFirstName;
     String mOccupation;
+    String mObjectId;
 
     @Override
     public String getLastName() {
@@ -44,6 +45,14 @@ public class Guardian extends FamilyMember{
     @Override
     public String toString(){
         return("Guardian: " + mFirstName + " " + mLastName + "\n Occupation: " + mOccupation);
+    }
+
+    public void setObjectId(String objectId) {
+        mObjectId = objectId;
+    }
+
+    public String getObjectId() {
+        return mObjectId;
     }
 
 }

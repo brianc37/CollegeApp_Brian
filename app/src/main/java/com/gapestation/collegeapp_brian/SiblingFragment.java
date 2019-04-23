@@ -10,6 +10,8 @@ import android.widget.TextView;
 public class SiblingFragment extends Fragment {
     private TextView firstname;
     private TextView lastname;
+    private int index;
+    Sibling mSibling;
 
 
     @Override
@@ -25,5 +27,14 @@ public class SiblingFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        index = getActivity().getIntent().getIntExtra(FamilyMember.EXTRA_INDEX, -1);
+        mSibling = (Sibling) Family.getFamilyList().get(index);
+        firstname.setText(mSibling.getFirstName());
+        lastname.setText(mSibling.getLastName());
     }
 }

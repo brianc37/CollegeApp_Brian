@@ -87,14 +87,14 @@ public class FamilyListFragment extends ListFragment {
             case R.id.menu_item_new_guardian:
                 Log.d(TAG, "Selected add new guardian.");
                 Guardian guardian = new Guardian();
-                boolean duplicate = false;
+                boolean duplicate = true;
                 for (FamilyMember f: Family.getFamily().getFamilyList()) {
                     if (f.equals(guardian)) {
-                        duplicate = true;
+                        duplicate = false;
                     }
-                    else duplicate = false;
+                    else duplicate = true;
                 }
-                if(duplicate == true) {
+                if(duplicate == false) {
                     Family.getFamily().addFamilyMember(guardian);
                     adapter.notifyDataSetChanged();
                 }
