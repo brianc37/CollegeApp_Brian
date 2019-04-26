@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.backendless.Backendless;
@@ -33,9 +37,13 @@ public class ProfileFragment extends Fragment {
     private EditText firstnameEdit;
     private EditText lastnameEdit;
     private Button submit;
+    private ImageButton mSelfieButton;
+    private ImageView mSelfieView;
+    private File mSelfieFile;
     public Profile Profile1 = new Profile("Alan", "Turing");
     public Profile mProfile;
     public static final int REQUEST_DATE_OF_BIRTH = 0;
+    public final int REQUEST_SELFIE = 1;
     Button DatePickerButton;
 
 
@@ -44,6 +52,7 @@ public class ProfileFragment extends Fragment {
         super.onCreateView(inflater, view, bundle);
 
         mProfile = new Profile("Brian", "Chamberlain");
+        mSelfieFile = getPhotoFile();
 
         String whereClause = "email = 'brianusa2001@gmail.com'";
         //Retrieve from Backendless
@@ -73,6 +82,8 @@ public class ProfileFragment extends Fragment {
         firstnameEdit = rootView.findViewById(R.id.profilefirstnameEdit);
         lastnameEdit = rootView.findViewById(R.id.profilelastnameEdit);
         submit = (Button) rootView.findViewById(R.id.submitButton);
+        mSelfieButton = (ImageButton)rootView.findViewById(R.id.profile_camera);
+        mSelfieView = (ImageView)rootView.findViewById(R.id.profile_pic);
 
         DatePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +104,22 @@ public class ProfileFragment extends Fragment {
                 saveToBackendless();
             }
         });
+
+        final Intent captureSelfie = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        boolean canTakeSelfie = mSelfieFile != null &&
+                captureSelfie.resolveActivity(getActivity().getPackageManager()) != null;
+        mSelfieButton.setEnabled(canTakeSelfie);
+        if (canTakeSelfie) {
+            Uri uri = Uri.fromFile(mSelfieFile);
+            captureSelfie.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        }
+        mSelfieButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(captureSelfie, REQUEST_SELFIE);
+            }
+        });
+
         return rootView;
     }
 
