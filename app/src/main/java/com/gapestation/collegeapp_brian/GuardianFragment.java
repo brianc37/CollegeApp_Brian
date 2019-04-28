@@ -23,6 +23,8 @@ public class GuardianFragment extends Fragment {
     private TextView lastname;
     private TextView occupation;
     private EditText occupationEdit;
+    private EditText firstnameEdit;
+    private EditText lastnameEdit;
     private int index;
     private Button guardianSubmitButton;
     Guardian mGuardian;
@@ -34,7 +36,9 @@ public class GuardianFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_guardian, view, false);
 
         firstname = rootView.findViewById(R.id.guardianfirstname);
+        firstnameEdit = rootView.findViewById(R.id.guardianfirstnameEdit);
         lastname = rootView.findViewById(R.id.guardianlastname);
+        lastnameEdit = rootView.findViewById(R.id.guardianlastnameEdit);
         occupation = rootView.findViewById(R.id.occupation);
         occupationEdit = rootView.findViewById(R.id.occupationEdit);
         guardianSubmitButton = (Button)rootView.findViewById(R.id.guardianSubmitButton);
@@ -42,6 +46,10 @@ public class GuardianFragment extends Fragment {
         guardianSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                firstname.setText(firstnameEdit.getText());
+                lastname.setText(lastnameEdit.getText());
+                mGuardian.setFirstName(firstname.getText().toString());
+                mGuardian.setLastName(lastname.getText().toString());
                 saveToBackendless();
             }
         });
@@ -60,9 +68,7 @@ public class GuardianFragment extends Fragment {
     }
 
     private void saveToBackendless() {
-        String whereClause = "email = 'brianusa2001@gmail.com'";
         DataQueryBuilder query = DataQueryBuilder.create();
-        query.setWhereClause(whereClause);
         Backendless.Data.of(Guardian.class).find(query, new AsyncCallback<List<Guardian>>() {
             @Override
             public void handleResponse(List<Guardian> response) {

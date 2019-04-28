@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/submitButton"
         android:text="Submit"
-        app:layout_constraintTop_toBottomOf="@id/profilelastname"
+        app:layout_constraintTop_toBottomOf="@id/profilelastnameEdit"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <LinearLayout
@@ -72,7 +72,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilelastnameEdit">
+        app:layout_constraintTop_toBottomOf="@+id/submitButton">
 
         <ImageView
             android:id="@+id/profile_pic"

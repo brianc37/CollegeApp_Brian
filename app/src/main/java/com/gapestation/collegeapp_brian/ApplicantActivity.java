@@ -46,6 +46,7 @@ public class ApplicantActivity extends AppCompatActivity
         user.setEmail("test@gmail.com");
         user.setPassword("test");
 
+        //log messages for backendless
         Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>(){
             @Override
             public void handleResponse(BackendlessUser backendlessUser){

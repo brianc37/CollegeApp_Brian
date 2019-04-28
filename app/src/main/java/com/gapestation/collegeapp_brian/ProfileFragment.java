@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -51,6 +54,10 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle bundle) {
         super.onCreateView(inflater, view, bundle);
 
+        //fix for app crashing on opening camera from stackoverflow
+        StrictMode.VmPolicy.Builder newbuilder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(newbuilder.build());
+
         mProfile = new Profile("Brian", "Chamberlain");
         mSelfieFile = getPhotoFile();
 
@@ -85,6 +92,7 @@ public class ProfileFragment extends Fragment {
         mSelfieButton = (ImageButton)rootView.findViewById(R.id.profile_camera);
         mSelfieView = (ImageView)rootView.findViewById(R.id.profile_pic);
 
+        //allows picking of birthdate
         DatePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,15 +104,19 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //updates textviews and profile to editexts data and saves to backendless
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 firstnametext.setText(firstnameEdit.getText());
                 lastnametext.setText(lastnameEdit.getText());
+                mProfile.setFirstName(firstnametext.getText().toString());
+                mProfile.setLastName(lastnametext.getText().toString());
                 saveToBackendless();
             }
         });
 
+        //takes pictures and sets imageview to picture
         final Intent captureSelfie = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakeSelfie = mSelfieFile != null &&
                 captureSelfie.resolveActivity(getActivity().getPackageManager()) != null;
@@ -120,9 +132,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        updateSelfieView();
+
         return rootView;
     }
 
+    //updates dateofbirth or imageview
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         Log.i("ProfileFragment", "" + requestCode + " " + resultCode);
@@ -133,6 +148,7 @@ public class ProfileFragment extends Fragment {
                 DatePickerButton.setText(mProfile.dateOfBirth.toString());
                 saveToBackendless();
             }
+            else if(requestCode == REQUEST_SELFIE) updateSelfieView();
         }
     }
 
@@ -141,6 +157,7 @@ public class ProfileFragment extends Fragment {
         super.onPause();
     }
 
+    //loads profile from backendless
     @Override
     public void onStart() {
         super.onStart();
@@ -174,6 +191,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    //saves to backendless
     private void saveToBackendless() {
         String whereClause = "email = 'brianusa2001@gmail.com'";
         DataQueryBuilder query = DataQueryBuilder.create();
@@ -220,12 +238,21 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    //returns photo file
     public File getPhotoFile() {
         File externalFilesDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         if (externalFilesDir == null) {
             return null;
         }
         return new File (externalFilesDir, mProfile.getPhotoFilename());
+    }
+
+    //sets the imageview to the selfie photo if one exists
+    public void updateSelfieView(){
+        if(mSelfieFile.exists() == true && mSelfieFile != null){
+            Bitmap path = BitmapFactory.decodeFile(mSelfieFile.getPath());
+            mSelfieView.setImageBitmap(path);
+        }
     }
 }
 

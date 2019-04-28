@@ -14,20 +14,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/guardianfirstnameEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guardianfirstname"/>
+
     <TextView
         android:id="@+id/guardianlastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="lastname"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guardianfirstname" />
+        app:layout_constraintTop_toBottomOf="@+id/guardianfirstnameEdit" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/guardianlastnameEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guardianlastname"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/occupation"
         android:text="occupation"
-        app:layout_constraintTop_toBottomOf="@id/guardianlastname"
+        app:layout_constraintTop_toBottomOf="@id/guardianlastnameEdit"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText

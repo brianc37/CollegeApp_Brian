@@ -80,6 +80,7 @@ public class FamilyListFragment extends ListFragment {
         inflater.inflate(R.menu.fragment_family_list, menu);
     }
 
+    //adds new family members to list if not duplicates
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         FamilyMemberAdapter adapter = (FamilyMemberAdapter)getListAdapter();
@@ -127,6 +128,7 @@ public class FamilyListFragment extends ListFragment {
                 menu);
     }
 
+    //handles deleting family members form list
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         Log.d(TAG, "Context item selected.");
@@ -164,6 +166,7 @@ public class FamilyListFragment extends ListFragment {
         adapter.notifyDataSetChanged();
     }
 
+    //opens correct fragment based on familymember in list that was clicked
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         FamilyMember f = ((FamilyMemberAdapter)getListAdapter()).getItem(position);
