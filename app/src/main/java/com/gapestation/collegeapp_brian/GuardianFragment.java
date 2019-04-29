@@ -43,6 +43,7 @@ public class GuardianFragment extends Fragment {
         occupationEdit = rootView.findViewById(R.id.occupationEdit);
         guardianSubmitButton = (Button)rootView.findViewById(R.id.guardianSubmitButton);
 
+        //sets first and last name to edit texts value and saves to backendless
         guardianSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +58,7 @@ public class GuardianFragment extends Fragment {
         return rootView;
     }
 
+    //sets intial first and last name values based on guardian selected in the list
     @Override
     public void onStart(){
         super.onStart();

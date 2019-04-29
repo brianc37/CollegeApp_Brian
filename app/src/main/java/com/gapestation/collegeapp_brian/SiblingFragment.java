@@ -39,6 +39,7 @@ public class SiblingFragment extends Fragment {
         lastnameEdit = rootView.findViewById(R.id.siblinglastnameEdit);
         submit = rootView.findViewById(R.id.siblingSubmitButton);
 
+        //sets first and last name to edit texts value and saves to backendless
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +54,7 @@ public class SiblingFragment extends Fragment {
         return rootView;
     }
 
+    //sets intial first and last name values based on sibling selected in the list
     @Override
     public void onStart(){
         super.onStart();
